@@ -1,9 +1,8 @@
 {
   "name": "thk-notifications-mock",
-  "version": "0.0.0",
   "main": "./src/notifications.mock.js",
   "dependencies":{
-      "angular-mocks":"1.0.7"
+      "angular-mocks":"1.2.5"
   },
   "ignore": [
     "**/.*",
