@@ -32,5 +32,12 @@ describe('notifications.mock', function () {
             registry.subscribe('topic', handler);
             expect(mock.topic).toEqual(handler);
         });
+
+        it('trap unsubscription handlers', function() {
+            registry.subscribe('topic', handler);
+            registry.unsubscribe('topic', handler);
+
+            expect(mock.topic).toBeUndefined();
+        });
     });
 });

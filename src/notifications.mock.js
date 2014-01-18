@@ -13,9 +13,14 @@ angular.module('notifications', [])
         return {persistent:{}};
     })
     .factory('topicRegistry', function(topicRegistryMock) {
-        return {subscribe:function(topic, subscriber) {
-            topicRegistryMock[topic] = subscriber;
-        }};
+        return {
+            subscribe: function(topic, subscriber) {
+                topicRegistryMock[topic] = subscriber;
+            },
+            unsubscribe: function(topic, subsciber) {
+                topicRegistryMock[topic] = undefined;
+            }
+        };
     })
     .factory('topicRegistryMock', function() {
         return {};
