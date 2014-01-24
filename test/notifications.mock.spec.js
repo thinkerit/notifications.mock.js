@@ -1,5 +1,5 @@
 describe('notifications.mock', function () {
-    var registry, dispatcher, mock;
+    var registry, dispatcher, mock, dispatcherMock;
 
     beforeEach(module('notifications'));
 
@@ -23,9 +23,10 @@ describe('notifications.mock', function () {
     describe('registry', function() {
         var handler = function() {};
 
-        beforeEach(inject(function(topicRegistry, topicRegistryMock) {
+        beforeEach(inject(function(topicRegistry, topicRegistryMock, topicMessageDispatcherMock) {
             registry = topicRegistry;
             mock = topicRegistryMock;
+            dispatcherMock = topicMessageDispatcherMock;
         }));
 
         it('trap subscription handlers', function() {
@@ -38,6 +39,11 @@ describe('notifications.mock', function () {
             registry.unsubscribe('topic', handler);
 
             expect(mock.topic).toBeUndefined();
+        });
+
+        it('trap persistentMessage handlers', function() {
+            registry.persistentMessage('topic', 'msg');
+            expect(dispatcherMock.persistent['topic']).toEqual('msg');
         });
     });
 });

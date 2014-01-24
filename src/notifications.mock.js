@@ -12,13 +12,16 @@ angular.module('notifications', [])
     .factory('topicMessageDispatcherMock', function() {
         return {persistent:{}};
     })
-    .factory('topicRegistry', function(topicRegistryMock) {
+    .factory('topicRegistry', function(topicRegistryMock, topicMessageDispatcherMock) {
         return {
             subscribe: function(topic, subscriber) {
                 topicRegistryMock[topic] = subscriber;
             },
-            unsubscribe: function(topic, subsciber) {
+            unsubscribe: function(topic) {
                 topicRegistryMock[topic] = undefined;
+            },
+            persistentMessage: function (topic, message) {
+                topicMessageDispatcherMock.persistent[topic] = message;
             }
         };
     })
