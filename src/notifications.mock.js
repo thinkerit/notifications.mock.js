@@ -17,8 +17,8 @@ angular.module('notifications', [])
             subscribe: function(topic, subscriber) {
                 topicRegistryMock[topic] = subscriber;
             },
-            unsubscribe: function(topic) {
-                topicRegistryMock[topic] = undefined;
+            unsubscribe: function(topic, subscriber) {
+                if(topicRegistryMock[topic] == subscriber) topicRegistryMock[topic] = undefined;
             },
             persistentMessage: function (topic, message) {
                 topicMessageDispatcherMock.persistent[topic] = message;

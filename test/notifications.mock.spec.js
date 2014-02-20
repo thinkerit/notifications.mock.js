@@ -29,16 +29,26 @@ describe('notifications.mock', function () {
             dispatcherMock = topicMessageDispatcherMock;
         }));
 
-        it('trap subscription handlers', function() {
-            registry.subscribe('topic', handler);
-            expect(mock.topic).toEqual(handler);
-        });
+        describe('given a topic subscriber', function() {
+            beforeEach(function() {
+                registry.subscribe('topic', handler);
+            });
 
-        it('trap unsubscription handlers', function() {
-            registry.subscribe('topic', handler);
-            registry.unsubscribe('topic', handler);
+            it('trap subscription handlers', function() {
+                expect(mock.topic).toEqual(handler);
+            });
 
-            expect(mock.topic).toBeUndefined();
+            describe('trap unsubscription handlers', function() {
+                it('when passed the correct subscription handler', function() {
+                    registry.unsubscribe('topic', handler);
+                    expect(mock.topic).toBeUndefined();
+                });
+
+                it('when passed the wrong subscription handler', function() {
+                    registry.unsubscribe('topic', function() {});
+                    expect(mock.topic).toEqual(handler);
+                });
+            });
         });
 
         it('trap persistentMessage handlers', function() {
