@@ -27,4 +27,9 @@ angular.module('notifications', [])
     })
     .factory('topicRegistryMock', function() {
         return {};
+    })
+    .factory('ngRegisterTopicHandler', function(topicRegistry) {
+        return function(scope, topic, handler) {
+            topicRegistry.subscribe(topic, handler);
+        }
     });
