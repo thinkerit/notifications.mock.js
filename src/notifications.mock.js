@@ -30,6 +30,10 @@ angular.module('notifications', [])
     })
     .factory('ngRegisterTopicHandler', function(topicRegistry) {
         return function(scope, topic, handler) {
-            topicRegistry.subscribe(topic, handler);
+            if (topic) topicRegistry.subscribe(topic, handler);
+            else {
+                var args = scope;
+                topicRegistry.subscribe(args.topic, args.handler);
+            }
         }
     });
